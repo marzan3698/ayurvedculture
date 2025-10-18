@@ -1,0 +1,172 @@
+ /* --- Utility Classes & Common Styles --- */
+ .container {
+     max-width: 1200px;
+     margin: 0 auto;
+     padding: 0 20px;
+ }
+
+ .section-title {
+     color: #000466;
+     font-weight: bold;
+     font-size: 24px;
+     text-transform: uppercase;
+     text-align: center;
+ }
+
+
+ /* --- 1. Diseases Section --- */
+ .diseases-section {
+     padding: 60px 0;
+     background-color: #fff;
+ }
+
+ .diseases-header {
+     display: flex;
+     justify-content: center;
+     /* Centered on mobile */
+     align-items: center;
+     margin-bottom: 40px;
+     position: relative;
+ }
+
+ .diseases-nav {
+     display: none;
+     /* Hidden by default, shown on larger screens */
+     position: absolute;
+     right: 0;
+ }
+
+ .diseases-nav button {
+     background: none;
+     border: 1px solid #ddd;
+     width: 30px;
+     height: 30px;
+     cursor: pointer;
+     margin-left: 5px;
+     color: #888;
+ }
+
+ .diseases-grid {
+     display: grid;
+     grid-template-columns: repeat(6, 1fr);
+     /* 6 columns on desktop */
+     gap: 20px;
+ }
+
+ .disease-item {
+     text-align: center;
+ }
+
+ .disease-item img {
+     width: 120px;
+     height: 120px;
+     border-radius: 50%;
+     object-fit: cover;
+     border: 2px solid #f0e9e1;
+     margin-bottom: 15px;
+ }
+
+ .disease-item p {
+     font-size: 13px;
+     color: #555;
+     text-transform: uppercase;
+     font-weight: 600;
+     line-height: 1.4;
+ }
+
+ /* --- 2. Support Section --- */
+ .support-section {
+     background-color: #f7f5f2;
+     padding: 60px 0;
+ }
+
+ .support-grid {
+     display: grid;
+     grid-template-columns: repeat(3, 1fr);
+     /* 3 columns */
+     gap: 40px;
+     margin-top: 40px;
+ }
+
+ .support-item {
+     text-align: center;
+ }
+
+ .support-icon {
+     width: 100px;
+     height: 100px;
+     border-radius: 50%;
+     background-color: #000466;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     margin: 0 auto 20px;
+ }
+
+ .support-icon i {
+     color: #fff;
+     font-size: 40px;
+ }
+
+ .support-item h3 {
+     font-size: 18px;
+     color: #333;
+     margin-bottom: 10px;
+ }
+
+ .support-item p {
+     font-size: 14px;
+     color: #777;
+     line-height: 1.6;
+     max-width: 300px;
+     margin: 0 auto;
+ }
+
+ .support-item p a {
+     color: #000466;
+     text-decoration: none;
+     font-weight: bold;
+ }
+
+ /* --- Responsive Adjustments --- */
+ @media (min-width: 769px) {
+     .diseases-header {
+         justify-content: center;
+     }
+
+     .diseases-nav {
+         display: block;
+         /* Show nav arrows on desktop */
+     }
+ }
+
+ @media (max-width: 768px) {
+
+     /* On mobile, the diseases grid becomes a scrollable flex container */
+     .diseases-grid {
+         display: flex;
+         overflow-x: auto;
+         /* Enables horizontal scroll */
+         padding-bottom: 20px;
+         /* Space for scrollbar */
+         -ms-overflow-style: none;
+         /* IE and Edge */
+         scrollbar-width: none;
+         /* Firefox */
+     }
+
+     /* Hide scrollbar for Chrome, Safari and Opera */
+     .diseases-grid::-webkit-scrollbar {
+         display: none;
+     }
+
+     .disease-item {
+         flex: 0 0 130px;
+         /* Each item has a fixed width and doesn't shrink */
+     }
+
+     /* The support grid stacks to a single column */
+     .support-grid {
+         grid-template-columns: 1fr;
+     }
+ }

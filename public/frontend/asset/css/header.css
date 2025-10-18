@@ -1,0 +1,221 @@
+/* Basic Reset and Font */
+* {
+    box-sizing: border-box;
+}
+
+/* body {
+
+    font-family: Arial, sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+
+} */
+
+html,
+body {
+    overflow-x: hidden;
+
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* --- DESKTOP STYLES --- */
+
+/* --- Top Bar --- */
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 5%;
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #e7e7e7;
+    font-size: 13px;
+}
+
+.header-top .contact-info,
+.header-top .user-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header-top .contact-info span,
+.header-top .user-actions a {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.social-icons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* --- Main Header Area --- */
+.header-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    background-color: #fff;
+
+
+
+}
+
+.header-main .logo img {
+    width: 180px;
+    height: 70px;
+    object-fit: contain;
+}
+
+.header-main .search-bar {
+    display: flex;
+    border: 1px solid #ccc;
+    width: 400px;
+}
+
+.header-main .search-bar input {
+    flex-grow: 1;
+    border: none;
+    padding: 10px;
+    font-size: 14px;
+    outline: none;
+}
+
+.header-main .search-bar button {
+    background-color: #30A7B7;
+    border: none;
+    padding: 0 15px;
+    cursor: pointer;
+    color: #333;
+}
+
+.header-main .cart-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.cart-info .fa-shopping-cart {
+    font-size: 20px;
+}
+
+/* --- Navigation Bar --- */
+.header-nav {
+    background-color: #000466;
+    position: relative;
+    z-index: 999;
+}
+
+.header-nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    z-index: 999;
+}
+
+.header-nav ul li a {
+    display: block;
+    padding: 15px 20px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s;
+    z-index: 999;
+}
+
+.header-nav ul li a:hover {
+    background-color: #444;
+}
+
+.menu-toggle {
+    display: none;
+    background-color: #d4a24d;
+    color: #fff;
+    border: none;
+    padding: 10px 12px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Text for opening hours (Hidden on Desktop) */
+.opening-hours {
+    display: none;
+}
+
+/* --- MOBILE RESPONSIVE STYLES --- */
+@media (max-width: 768px) {
+    .header-top {
+        justify-content: flex-end;
+        padding: 8px 3%;
+    }
+
+    .header-top .contact-info {
+        display: none;
+    }
+
+    .header-main {
+        padding: 15px 3%;
+        z-index: 999;
+    }
+
+    .header-main .search-bar {
+        display: none;
+    }
+
+    .header-main .logo img {
+        width: 140px;
+        height: auto;
+    }
+
+    .header-nav {
+        display: flex;
+        /* This positions the hours on the left and the icon on the right */
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 3%;
+    }
+
+    .header-nav ul {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #2c2c2c;
+    }
+
+    .header-nav ul.active {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    /*
+            *
+            * CSS FIX IS HERE
+            * This makes the opening hours text visible on mobile.
+            *
+            */
+    .opening-hours {
+        display: block;
+        color: #fff;
+        font-weight: bold;
+        font-size: 14px;
+        padding-left: 10px;
+    }
+}

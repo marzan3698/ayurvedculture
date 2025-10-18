@@ -1,0 +1,87 @@
+.slider-container {
+    width: 100%;
+    height: 500px;
+    /* Desktop height */
+    position: relative;
+    overflow: hidden;
+    background-color: #f0f0f0;
+    border: 2px solid rgb(57, 57, 162);
+}
+
+.slider-wrapper {
+    display: flex;
+    /* The width is now set by JavaScript, but this is a good fallback */
+    width: 300%;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+    /* Each slide takes up 1/3 of the wrapper's width */
+    width: 33.333%;
+    height: 100%;
+    flex-shrink: 0;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+@media (max-width: 768px) {
+    .slider-container {
+        height: auto;
+        /* Mobile height */
+        width: auto;
+    }
+}
+
+
+/* --- Main Section Container --- */
+.product-section {
+    background-color: #fff;
+    /* White background for the section */
+    padding: 60px 20px;
+    text-align: center;
+    position: relative;
+    /* Crucial for the animated background */
+    overflow: hidden;
+    /* Hides the overflowing grid animation */
+}
+
+/* --- Animated Grid Background --- */
+.product-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    /* Wider than the container to allow for seamless scrolling */
+    height: 100%;
+    z-index: 0;
+    /* Places the grid behind the content */
+
+    /* Creating the grid pattern with light opacity */
+    background-image:
+        linear-gradient(to right, rgba(247, 183, 49, 0.1) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(247, 183, 49, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    /* The size of each grid square */
+
+    /* Applying the animation */
+    animation: scrollGrid 40s linear infinite;
+}
+
+/* --- Keyframes for the Scrolling Animation --- */
+@keyframes scrollGrid {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        /* Moves left by half its width, which creates a seamless loop */
+        transform: translateX(-50%);
+    }
+}

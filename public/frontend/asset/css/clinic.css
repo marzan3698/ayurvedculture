@@ -1,0 +1,157 @@
+/* --- Main Section Container --- */
+.clinics-section {
+    background-color: #f7f5f2;
+    /* Light beige background from image */
+    padding: 60px 20px;
+    text-align: center;
+}
+
+/* --- Section Title --- */
+.clinics-title {
+    color: #30A7B7;
+    /* Orange color */
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+}
+
+/* --- 'View All' Link Styling --- */
+.view-all-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #c58c43;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    /* Increased vertical margin to give the new divider more space */
+    margin: 25px 0;
+}
+
+/* MODIFIED: Lines on either side of the 'View All' text */
+.view-all-link::before,
+.view-all-link::after {
+    content: '';
+    flex: 1;
+    /* CHANGED: Made the line wider */
+    max-width: 350px;
+
+    /* REMOVED: height and background-color properties */
+
+    /* ADDED: A thicker, dotted border to create the new line style */
+    border-bottom: 2px dotted #d1c9bf;
+}
+
+.view-all-link::before {
+    margin-right: 20px;
+}
+
+.view-all-link::after {
+    margin-left: 20px;
+}
+
+/* --- Clinics Grid Layout --- */
+.clinics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 columns on desktop */
+    gap: 25px;
+    max-width: 1200px;
+    margin: 40px auto;
+    text-align: left;
+}
+
+/* --- Individual Clinic Card --- */
+.clinic-card {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #e0d9cf;
+    border-radius: 12px;
+    transition: box-shadow 0.3s;
+}
+
+.clinic-card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+}
+
+.clinic-image img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    /* Makes the image circular */
+    object-fit: cover;
+    margin-right: 20px;
+    flex-shrink: 0;
+}
+
+.clinic-info {
+    font-size: 14px;
+    color: #666;
+}
+
+.clinic-info h3 {
+    font-size: 16px;
+    color: #333;
+    margin: 0 0 8px 0;
+}
+
+.clinic-info p {
+    margin: 4px 0;
+    line-height: 1.5;
+}
+
+.clinic-info i {
+    margin-right: 8px;
+    color: #aaa;
+}
+
+.direction-btn {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #555;
+    text-decoration: none;
+    margin-top: 10px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.direction-btn:hover {
+    background-color: #f5f5f5;
+    border-color: #bbb;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 1024px) {
+    .clinics-grid {
+        grid-template-columns: repeat(2, 1fr);
+        /* 2 columns for tablets */
+    }
+}
+
+@media (max-width: 768px) {
+    .clinics-grid {
+        grid-template-columns: 1fr;
+        /* 1 column for smaller tablets/mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .clinic-card {
+        flex-direction: column;
+        /* Stack image on top of info */
+        text-align: center;
+    }
+
+    .clinic-image img {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+}
