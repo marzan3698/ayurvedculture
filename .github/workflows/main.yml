@@ -1,0 +1,50 @@
+# GitHub Action for deploying a Laravel project to cPanel FTP
+
+name: Deploy Laravel to cPanel
+
+# Triggers the workflow on push events to the "main" branch
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Check out the repository code
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # 2. Set up PHP
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2' # Feel free to change this to your project's PHP version
+        extensions: mbstring, dom, fileinfo, mysqlnd
+        coverage: none
+
+    # 3. Install Composer dependencies
+    - name: Install Composer dependencies
+      run: composer install --prefer-dist --no-progress --no-dev
+
+    # 4. Sync files to cPanel via FTP
+    - name: Deploy files via FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.FTP_HOST }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        # This is the destination folder on your cPanel server
+        # We got this from Step 2.
+        remote-path: /home/paaera/ayurvedculture.com/
+        # This excludes files you don't need on the server
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          .github/**
+          .env
+          .gitignore
+          README.md
