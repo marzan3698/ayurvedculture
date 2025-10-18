@@ -2,7 +2,7 @@
 
 name: Deploy Laravel to cPanel
 
-# Triggers the workflow on push events to the "main" branch
+# This workflow runs on any push to the 'main' branch
 on:
   push:
     branches:
@@ -10,58 +10,61 @@ on:
 
 jobs:
   deploy:
-    # Use the latest version of Ubuntu for the runner
+    # The job will run on a virtual machine hosted by GitHub
     runs-on: ubuntu-latest
 
     steps:
-    # 1. Check out the repository code
-    # This step downloads your code onto the runner.
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      # Step 1: Check out the repository code
+      # This downloads your project code into the virtual machine.
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    # 2. Set up PHP environment
-    # This installs PHP and required extensions for Laravel.
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.2' # IMPORTANT: Match this with your cPanel PHP version
-        extensions: mbstring, dom, fileinfo, mysqlnd, pdo, pdo_mysql
-        coverage: none
+      # Step 2: Set up the PHP environment
+      # This installs PHP and the necessary extensions your Laravel app needs.
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2' # IMPORTANT: Make sure this matches your cPanel PHP version.
+          extensions: mbstring, dom, fileinfo, mysqlnd, pdo, pdo_mysql
+          coverage: none
 
-    # 3. Install Composer dependencies
-    # This runs 'composer install' to get all your vendor packages.
-    # We use --no-dev to skip development-only packages.
-    - name: Install Composer dependencies
-      run: composer install --prefer-dist --no-progress --no-dev
+      # Step 3: Install Composer Dependencies
+      # This runs 'composer install' to download all the packages from your composer.json file.
+      # The '--no-dev' flag skips packages that are only for local development.
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-progress --no-dev
 
-    # 4. Sync files to cPanel via Secure FTP
-    # This is the core deployment step. It uses FTPS for a secure connection.
-    - name: Deploy files via FTPS
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-      with:
-        # Credentials from GitHub Secrets
-        server: ${{ secrets.FTP_HOST }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
+      # Step 4: Deploy Files to Server
+      # This is the key step that securely uploads your files to the cPanel server.
+      - name: Deploy files via FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          # Your server credentials stored securely in GitHub Secrets.
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
 
-        # Protocol and Security Settings to prevent timeout errors
-        protocol: ftps
-        port: 21
-        security: 'loose'
+          # --- FIXES APPLIED ---
+          # Use FTPS protocol on the standard port to avoid firewall issues.
+          protocol: ftps
+          port: 21
+          security: 'loose' # Necessary for some server configurations.
 
-        # The destination directory on your server
-        remote-path: /home/paaera/ayurvedculture.com/
-        
-        # Verbose logging for better debugging
-        log-level: verbose
+          # The destination folder on your cPanel server.
+          # This is the corrected parameter name.
+          server-dir: /home/paaera/ayurvedculture.com/
 
-        # List of files/folders to exclude from the upload
-        exclude: |
-          **/.git*
-          **/.git*/**
-          **/node_modules/**
-          .github/**
-          .env
-          .gitignore
-          README.md
-          storage/logs/*.log
+          # Provides detailed logs if something goes wrong.
+          log-level: verbose
+
+          # A list of files and folders to NOT upload to the server.
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            .github/**
+            .env
+            .gitignore
+            README.md
+            storage/logs/*.log
+
