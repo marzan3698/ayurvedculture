@@ -1,4 +1,4 @@
-# GitHub Action for deploying a Laravel project to cPanel FTP
+# GitHub Action for deploying a Laravel project to cPanel with FTPS
 
 name: Deploy Laravel to cPanel
 
@@ -10,36 +10,52 @@ on:
 
 jobs:
   deploy:
+    # Use the latest version of Ubuntu for the runner
     runs-on: ubuntu-latest
 
     steps:
     # 1. Check out the repository code
+    # This step downloads your code onto the runner.
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    # 2. Set up PHP
+    # 2. Set up PHP environment
+    # This installs PHP and required extensions for Laravel.
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.2' # Feel free to change this to your project's PHP version
-        extensions: mbstring, dom, fileinfo, mysqlnd
+        php-version: '8.2' # IMPORTANT: Match this with your cPanel PHP version
+        extensions: mbstring, dom, fileinfo, mysqlnd, pdo, pdo_mysql
         coverage: none
 
     # 3. Install Composer dependencies
+    # This runs 'composer install' to get all your vendor packages.
+    # We use --no-dev to skip development-only packages.
     - name: Install Composer dependencies
       run: composer install --prefer-dist --no-progress --no-dev
 
-    # 4. Sync files to cPanel via FTP
-    - name: Deploy files via FTP
+    # 4. Sync files to cPanel via Secure FTP
+    # This is the core deployment step. It uses FTPS for a secure connection.
+    - name: Deploy files via FTPS
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
+        # Credentials from GitHub Secrets
         server: ${{ secrets.FTP_HOST }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        # This is the destination folder on your cPanel server
-        # We got this from Step 2.
+
+        # Protocol and Security Settings to prevent timeout errors
+        protocol: ftps
+        port: 21
+        security: 'loose'
+
+        # The destination directory on your server
         remote-path: /home/paaera/ayurvedculture.com/
-        # This excludes files you don't need on the server
+        
+        # Verbose logging for better debugging
+        log-level: verbose
+
+        # List of files/folders to exclude from the upload
         exclude: |
           **/.git*
           **/.git*/**
@@ -48,3 +64,4 @@ jobs:
           .env
           .gitignore
           README.md
+          storage/logs/*.log
